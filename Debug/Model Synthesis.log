@@ -1,0 +1,7 @@
+﻿  parseInput.cpp
+c:\users\aasaico\desktop\proc_gen\model-synthesis-master\src\parseinput\parseinput.cpp(79): error C3861: 'max': identifier not found
+  parseTiledModel.cpp
+c:\users\aasaico\desktop\proc_gen\model-synthesis-master\src\parseinput\parsetiledmodel.cpp(53): error C3861: 'max': identifier not found
+  synthesizer.cpp
+c:\users\aasaico\desktop\proc_gen\model-synthesis-master\src\synthesizer.cpp(137): error C3861: 'max': identifier not found
+  Generating Code...
