@@ -3,6 +3,7 @@
 #include "propagator/PropagatorAc3.h"
 #include "propagator/PropagatorAc4.h"
 #include <deque>
+#include <algorithm>
 #include <vector>
 #include <iostream>
 #include <chrono>

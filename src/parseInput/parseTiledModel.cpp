@@ -1,6 +1,7 @@
 // Copyright (c) 2021 Paul Merrell
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <sstream>
 #include "parseTiledModel.h"
 

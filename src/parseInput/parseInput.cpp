@@ -13,7 +13,9 @@
 #include "../third_party/lodepng/lodepng.h"
 #include "parseOverlapping.h"
 #include "parseSimpleTiled.h"
+#include <algorithm>
 #include "parseTiledModel.h"
+
 
 using namespace std;
 using namespace std::chrono;
