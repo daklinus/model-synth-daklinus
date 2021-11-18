@@ -414,7 +414,6 @@ x, y, and z extents
  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 
 
 <Objects>
-3D Studio Scenes\castle.max
 somethin'
 $castle9
 $snow9
