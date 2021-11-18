@@ -12,7 +12,6 @@ from bpy.props import StringProperty, BoolProperty
 from bpy_extras.io_utils import ImportHelper
 from bpy.types import Operator
 from math import radians
-from mathutils import Matrix
 
 extents_re = re.compile(r"^x, y, and z extents")
 objects_start_re = re.compile(r"<Objects>")
@@ -120,8 +119,8 @@ def object_array(scn, dim, grid, objs, units):
                                                [x*units, y*units, z*units, 1.0]))
 
                 for o in current_objs:
-                    new_o = scn.collection.objects.link(o)
-                    o.matrix_world = mat
+                    new_o = scn.objects.new(o)
+                    new_o.setMatrix(mat)
         print ("Done with plane ", z)
 
 def read_file(filename):

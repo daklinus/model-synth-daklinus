@@ -29,5 +29,5 @@ $WallY
 $WallX
 #
 5
-WallCorner
+$WallCorner
 #

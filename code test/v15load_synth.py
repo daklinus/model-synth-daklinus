@@ -2,17 +2,15 @@
 ## Modified by Paul Merrell
 
 import bpy
+import bmesh
 import os
 import math
-import mathutils
 import re
 import array
 import itertools
 from bpy.props import StringProperty, BoolProperty
 from bpy_extras.io_utils import ImportHelper
 from bpy.types import Operator
-from math import radians
-from mathutils import Matrix
 
 extents_re = re.compile(r"^x, y, and z extents")
 objects_start_re = re.compile(r"<Objects>")
@@ -99,7 +97,7 @@ def fuse_objects(scndict, objs):
         oolist = []
         for obj in olist:
             if obj in scndict:
-                oolist.append(scndict[obj])
+                oolist.append(scndict[obj].data(mesh=1))
                 found = 1
             else:
                 missing = 1
@@ -108,20 +106,20 @@ def fuse_objects(scndict, objs):
     return (res, found, missing)
 
 def object_array(scn, dim, grid, objs, units):
-    for z in range(0, dim[2]):
-        for x in range(0, dim[0]):
-            for y in range(0, dim[1]):
+    for z in xrange(0, dim[2]):
+        for x in xrange(0, dim[0]):
+            for y in xrange(0, dim[1]):
                 current_objs = objs[grid[z*dim[1]*dim[0] + x*dim[1] + y]]
                 if current_objs == None:
                     continue
-                mat = mathutils.Matrix(([1.0, 0.0, 0.0, 0.0],
+                mat = Blender.Mathutils.Matrix([1.0, 0.0, 0.0, 0.0],
                                                [0.0, 1.0, 0.0, 0.0],
                                                [0.0, 0.0, 1.0, 0.0],
-                                               [x*units, y*units, z*units, 1.0]))
+                                               [x*units, y*units, z*units, 1.0])
 
                 for o in current_objs:
-                    new_o = scn.collection.objects.link(o)
-                    o.matrix_world = mat
+                    new_o = scn.objects.new(o)
+                    new_o.setMatrix(mat)
         print ("Done with plane ", z)
 
 def read_file(filename):
