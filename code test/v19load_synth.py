@@ -4,12 +4,15 @@
 import bpy
 import os
 import math
+import mathutils
 import re
 import array
 import itertools
 from bpy.props import StringProperty, BoolProperty
 from bpy_extras.io_utils import ImportHelper
 from bpy.types import Operator
+from math import radians
+from mathutils import Matrix
 
 extents_re = re.compile(r"^x, y, and z extents")
 objects_start_re = re.compile(r"<Objects>")
@@ -27,11 +30,11 @@ def read_grid(infile):
     li = infile.readline()
     dim = [int(x) for x in li.rstrip().split(' ')]
     grid = array.array('L', itertools.repeat(0, dim[0]*dim[1]*dim[2]))
-    for z in xrange(0, dim[2]):
+    for z in range(0, dim[2]):
         li = infile.readline()
-        for x in xrange(0, dim[0]):
+        for x in range(0, dim[0]):
             li = [int(it) for it in infile.readline().rstrip().split()]
-            for y in xrange(0, dim[1]):
+            for y in range(0, dim[1]):
                 grid[z*dim[1]*dim[0] + x*dim[1] + y] = li[y]
     return (dim, grid)
 
@@ -89,6 +92,7 @@ def read_synth(infile):
     return (dim, grid, objs, scenefile)
 
 def fuse_objects(scndict, objs):
+
     res = [None]
     found = 0
     missing = 0
@@ -96,7 +100,7 @@ def fuse_objects(scndict, objs):
         oolist = []
         for obj in olist:
             if obj in scndict:
-                oolist.append(scndict[obj].getData(mesh=1))
+                oolist.append(scndict[obj])
                 found = 1
             else:
                 missing = 1
@@ -105,20 +109,21 @@ def fuse_objects(scndict, objs):
     return (res, found, missing)
 
 def object_array(scn, dim, grid, objs, units):
-    for z in xrange(0, dim[2]):
-        for x in xrange(0, dim[0]):
-            for y in xrange(0, dim[1]):
+    for z in range(0, dim[2]):
+        for x in range(0, dim[0]):
+            for y in range(0, dim[1]):
                 current_objs = objs[grid[z*dim[1]*dim[0] + x*dim[1] + y]]
                 if current_objs == None:
                     continue
-                mat = Blender.Mathutils.Matrix([1.0, 0.0, 0.0, 0.0],
+                mat = mathutils.Matrix(([1.0, 0.0, 0.0, 0.0],
                                                [0.0, 1.0, 0.0, 0.0],
                                                [0.0, 0.0, 1.0, 0.0],
-                                               [x*units, y*units, z*units, 1.0])
+                                               [x*units, y*units, z*units, 1.0]))
 
                 for o in current_objs:
-                    new_o = scn.objects.new(o)
-                    new_o.setMatrix(mat)
+                    new_o = bpy.data.objects.new(o.name, o.data)
+                    scn.collection.objects.link(new_o) 
+                    new_o.matrix_world = mat
         print ("Done with plane ", z)
 
 def read_file(filename):

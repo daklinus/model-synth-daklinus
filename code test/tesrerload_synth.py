@@ -92,6 +92,7 @@ def read_synth(infile):
     return (dim, grid, objs, scenefile)
 
 def fuse_objects(scndict, objs):
+
     res = [None]
     found = 0
     missing = 0
@@ -120,8 +121,9 @@ def object_array(scn, dim, grid, objs, units):
                                                [x*units, y*units, z*units, 1.0]))
 
                 for o in current_objs:
-                    new_o = scn.collection.objects.link(o)
-                    o.matrix_world = mat
+                    new_o = bpy.data.objects.new(o.name, o.data)
+                    scn.collection.objects.link(new_o) 
+                    new_o.matrix_world = mat
         print ("Done with plane ", z)
 
 def read_file(filename):
