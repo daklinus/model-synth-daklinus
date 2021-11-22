@@ -23,10 +23,10 @@ $GateY
 $GateX
 #
 3
-$WallY
+$WallX
 #
 4
-$WallX
+$WallY
 #
 5
 $WallCorner
