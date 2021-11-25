@@ -3,6 +3,10 @@
 <img alt="Generated Model" src="figures/city.jpg">
 <img alt="Generated Textures" src="figures/textures.jpg">
 
+
+_This is a fork of Paul Merrells model synthesis, the primary goal of this fork is to make the algorithms and setup compatible with Blender 3.0 and beyond, all instructions are the same with the biggest change is this forks focus on 3D and compatibility with Blender 3.0.
+Compatible with Blender 3.0_
+
 Model synthesis is a technique for generating 2D and 3D shapes from examples. It is inspired by texture synthesis.
 Model synthesis was created by Paul Merrell. Merrell published several papers about it from 2007 - 2011 at
 [i3D](https://paulmerrell.org/wp-content/uploads/2021/06/model_synthesis.pdf),
